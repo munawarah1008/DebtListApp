@@ -41,10 +41,6 @@ export default async function Page() {
             payment_due_date={debt.payment_due_date} 
           />
 
-      //     {data?.map((dt) => (
-      //   <CardContact key={dt._id} id={dt._id} {...dt} />
-      // ))}
-
         ))}
         </div>
       </div>
