@@ -1,8 +1,8 @@
-import { DebtAdd } from "./components/debtList/debt.add";
-import { DebtList } from "./components/debtList/debt.list";
-import { Nunito } from '@next/font/google';
+import { DebtAdd } from "../components/debtList/debt.add";
+import { DebtList } from "../components/debtList/debt.list";
+import { Nunito } from 'next/font/google';
 
-// Configure the Nunito font
+
 const nunito = Nunito({
   subsets: ['latin'],
   weight: ['400', '700'],
@@ -10,10 +10,11 @@ const nunito = Nunito({
 
 async function getDebtList() {
   try {
-    const res = await fetch("https://v1.appbackend.io/v1/rows/SXsMhsVe0ljU", {
-      cache: "no-store",
-    });
-    const data = await res.json();
+    const respon = await fetch(
+      "https://v1.appbackend.io/v1/rows/SXsMhsVe0ljU",
+      { next: { revalidate: 0 } },
+    );
+    const data = await respon.json();
     return data;
   } catch (error) {
     console.log(error);
@@ -31,7 +32,7 @@ export default async function Page() {
       </div>
       <div className={nunito.className}>
       <div className="wrap-card" >
-        {data.map((debt) => (
+        {data?.map((debt) => (
           <DebtList
             key={debt._id}
             id={debt._id}  
@@ -39,6 +40,11 @@ export default async function Page() {
             amount={debt.amount} 
             payment_due_date={debt.payment_due_date} 
           />
+
+      //     {data?.map((dt) => (
+      //   <CardContact key={dt._id} id={dt._id} {...dt} />
+      // ))}
+
         ))}
         </div>
       </div>
